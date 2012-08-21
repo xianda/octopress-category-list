@@ -51,7 +51,7 @@ In some template files, you can add the following markups.
         <ul id="top-category-list">{% top_category_list counter:true %}</ul>
     </section>
 
-This will list your categories by the number of posts in descending order. The default number of categories listed in the top category list is 10. Change this by setting "top_category_limit: <num>" in _config.yml.
+This will list your categories by the number of posts in descending order. The default number of categories listed in the top category list is 10. Change this by setting "top_category_limit: <num>" in _config.yml. If you'd like to list all of the categories by number of posts (like, for instance, on a devoted page) without making the top categories list in the sidebar list every single category, add "include_all:true" to the arguments to top_category_list, like {% top_category_list [counter:true,include_all:true] %}. If you don't care about limiting the sidebar aside thing, go ahead and set top_category_limit in _config.yml to 0.
 
 alswl 的改进
 ---------
