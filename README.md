@@ -23,6 +23,7 @@ Syntax:
 
     {% category_cloud [counter:true] %}
     {% category_list [counter:true] %}
+    {% top_category_list [counter:true] %}
 
 Example:
 --------
@@ -43,6 +44,15 @@ In some template files, you can add the following markups.
         <ul id="category-list">{% category_list counter:true %}</ul>
     </section>
 
+### source/_includes/custom/asides/top_category_list.html ###
+
+    <section>
+      <h1>Top Categories</h1>
+        <ul id="top-category-list">{% top_category_list counter:true %}</ul>
+    </section>
+
+This will list your categories by the number of posts in descending order. The default number of categories listed in the top category list is 10. Change this by setting "top_category_limit: <num>" in _config.yml.
+
 alswl 的改进
 ---------
 
@@ -52,7 +62,7 @@ alswl 的改进
 Notes:
 ------
 Be sure to insert above template files into `default_asides` array in `_config.yml`.
-And also you can define styles for 'tag-cloud' or 'category-list' in a `.scss` file.
+And also you can define styles for 'tag-cloud', 'category-list', or 'top-category-list' in a `.scss` file.
 (ex: `sass/custom/_styles.scss`)
 
 Licence:
