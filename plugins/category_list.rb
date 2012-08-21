@@ -115,6 +115,10 @@ module Jekyll
         @opts['counter'] = ($1 == 'true')
         markup = markup.strip.sub(/counter:\w+/iu,'')
       end
+      if markup.strip =~ /\s*include_all:(\w+)/iu
+        @opts['include_all'] = ($1 == 'true')
+        markup = markup.strip.sub(/include_all:\w+/iu,'')
+      end
       super
     end
     def render(context)
@@ -123,7 +127,12 @@ module Jekyll
       category_dir = config['root'] + config['category_dir'] + '/'
       categories = context.registers[:site].categories
       cat_limit = config['top_category_limit'] || 10
-      categories.keys.sort_by{ |cat| categories[cat].count  }.reverse.take(cat_limit).each do |category|
+      if (@opts['include_all'])
+	top_categories = categories.keys.sort_by{ |cat| categories[cat].count  }.reverse
+      else
+	top_categories = categories.keys.sort_by{ |cat| categories[cat].count  }.reverse.take(cat_limit)
+      end
+      top_categories.each do |category|
         url = category_dir + category.gsub(/_|\P{Word}/u, '-').gsub(/-{2,}/u, '-').downcase
         html << "<li><a href='#{url}'>#{category}"
         if @opts['counter']
