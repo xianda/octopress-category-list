@@ -127,7 +127,7 @@ module Jekyll
       category_dir = config['root'] + config['category_dir'] + '/'
       categories = context.registers[:site].categories
       cat_limit = config['top_category_limit'] || 10
-      if (@opts['include_all'])
+      if (@opts['include_all'] || config['top_category_limit'] == 0)
 	top_categories = categories.keys.sort_by{ |cat| categories[cat].count  }.reverse
       else
 	top_categories = categories.keys.sort_by{ |cat| categories[cat].count  }.reverse.take(cat_limit)
