@@ -108,7 +108,35 @@ module Jekyll
     end
   end
 
+  class TopCategoryList < Liquid::Tag
+    def initialize(tag_name, markup, tokens)
+      @opts = {}
+      if markup.strip =~ /\s*counter:(\w+)/iu
+        @opts['counter'] = ($1 == 'true')
+        markup = markup.strip.sub(/counter:\w+/iu,'')
+      end
+      super
+    end
+    def render(context)
+      html = ""
+      config = context.registers[:site].config
+      category_dir = config['root'] + config['category_dir'] + '/'
+      categories = context.registers[:site].categories
+      cat_limit = config['top_category_limit'] || 10
+      categories.keys.sort_by{ |cat| categories[cat].count  }.reverse.take(cat_limit).each do |category|
+        url = category_dir + category.gsub(/_|\P{Word}/u, '-').gsub(/-{2,}/u, '-').downcase
+        html << "<li><a href='#{url}'>#{category}"
+        if @opts['counter']
+          html << " (#{categories[category].count})"
+        end
+        html << "</a></li>"
+      end
+      html
+    end
+  end
+
 end
 
 Liquid::Template.register_tag('category_cloud', Jekyll::CategoryCloud)
 Liquid::Template.register_tag('category_list', Jekyll::CategoryList)
+Liquid::Template.register_tag('top_category_list', Jekyll::TopCategoryList)
