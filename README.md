@@ -10,12 +10,14 @@ Files:
 
     .
     ├─ plugins/
-    │  └── category_list.rb
+    │  ├─ category_generator.rb
+    │  └─ category_list.rb
     └─ source/
        └─ _includes/
           └─ custom/
              └─ asides/
                 ├─ category_list.html
+                ├─ top_category_list.html
                 └─ category_cloud.html
 
 Syntax:
@@ -58,6 +60,19 @@ alswl 的改进
 
 支持 utf-8，使用 `category_cloud` 替换 `tag_cloud` ，
 以避免和 [真正的标签云](https://github.com/robbyedwards/octopress-tag-cloud) 冲突。
+
+Category Archive now supports category slugs and titles
+---------
+
+category_generator.rb is merged from octopress 2.1, which supports this new feature.
+For example, in the YAML header set categories like this:
+
+    categories:
+    - essay [随笔]
+    - news
+
+Octopress will parse out '随笔' and 'news' as the title and display it in
+the category list, but the category index urls will be essay/ and news/.
 
 Notes:
 ------
