@@ -139,8 +139,14 @@ module Jekyll
         top_categories = categories.keys.sort_by{ |cat| categories[cat].count  }.reverse.take(cat_limit)
       end
       top_categories.each do |category|
-        url = category_dir + category.gsub(/_|\P{Word}/u, '-').gsub(/-{2,}/u, '-').downcase
-        html << "<li><a href='#{url}'>#{category}"
+        if category =~ /(.+)\[(.+)\]/
+          slug = $1.strip
+          title = $2.strip
+        else
+          slug = title = category
+        end
+        url = category_dir + slug.gsub(/_|\P{Word}/u, '-').gsub(/-{2,}/u, '-').downcase
+        html << "<li><a href='#{url}'>#{title}"
         if @opts['counter']
           html << " (#{categories[category].count})"
         end
